@@ -11,4 +11,5 @@ $app->get('/hello/{name}', function (Request $request, Response $response, array
 
     return $response;
 });
+
 $app->run();
