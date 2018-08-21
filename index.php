@@ -1,5 +1,5 @@
 <?php
-require 'vendor/autoload.php';
+/*require 'vendor/autoload.php';
 
 $client = new MongoDB\Client("mongodb://localhost:27017");
 $collection = $client->blog_abinthomas_me->posts;
@@ -12,6 +12,7 @@ foreach ($result as $entry) {
 }
 
 exit();
+*/
 
 /*
 https://docs.mongodb.com/php-library/current/tutorial/
@@ -30,7 +31,7 @@ contents
 tags
 
 comments
-
+*/
 
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
@@ -38,21 +39,7 @@ use \Psr\Http\Message\ResponseInterface as Response;
 require 'vendor/autoload.php';
 
 $app = new \Slim\App;
-$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
 
-    $connection = new MongoClient();
-    $db = $connection->blog_abinthomas_me;
-
-    $posts = $db->posts;
-
-     // all records
-    $result = $posts->find();
-
-    $name = $args['name'];
-    $response->getBody()->write("Hello, $result");
-
-    return $response;
-});
+require 'App/Routes/Router.php';
 
 $app->run();
-*/
