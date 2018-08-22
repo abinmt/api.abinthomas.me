@@ -1,10 +1,13 @@
 <?php
-$fnAuth = function ($IRequest, $IResponse, $next) {
-    //$IRequest->getBody()->write('BEFORE');
-    $IRequest = $next($IRequest, $IResponse);
-   // $IRequest->getBody()->write('AFTER');
+use \Psr\Http\Message\ServerRequestInterface as IRequest;
+use \Psr\Http\Message\ResponseInterface as IResponse;
 
-    return $IResponse;
+$fnAuth = function (IRequest $objRequest, IResponse $objResponse, $fnNext) {
+    //$response->getBody()->write('BEFORE');
+    $objResponse = $fnNext($objRequest, $objResponse);
+    //$response->getBody()->write('AFTER');
+
+    return $objResponse;
 };
 
 $objApp->add($fnAuth);
