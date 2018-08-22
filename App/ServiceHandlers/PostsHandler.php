@@ -2,18 +2,20 @@
 use \Psr\Http\Message\ServerRequestInterface as IRequest;
 use \Psr\Http\Message\ResponseInterface as IResponse;
 
-$getAllPosts = function(IRequest $objRequest, IResponse $objResponse, array $arrmixArgs): IResponse {
-  global $_objContainer;
+$fnGetAllPosts = function(IRequest $objRequest, IResponse $objResponse, array $arrmixArgs): IResponse {
+  $arrobjResultsIterator = $this->posts->find();
 
-  $result = $_objContainer['posts']->find();
+  $arrmixRecords = [];
 
-  /*
-  foreach ($result as $entry) {
-      echo $entry['_id'], ' ff:ff ', $entry['name'], "\n";
+  foreach ($arrobjResultsIterator as $intIndex => $arrmixData) {
+     $arrmixRecords[$intIndex]['name'] = $arrmixData['name'];
+     $arrmixRecords[$intIndex]['status'] = $arrmixData['status'];
+     $arrmixRecords[$intIndex]['created_on'] = $arrmixData['created_on'];
+     $arrmixRecords[$intIndex]['updated_on'] = $arrmixData['updated_on'];
+     $arrmixRecords[$intIndex]['contents'] = $arrmixData['contents'];
+     $arrmixRecords[$intIndex]['tags'] = $arrmixData['tags'];
+     $arrmixRecords[$intIndex]['comments'] = $arrmixData['comments'];
   }
-  */
 
-  $objResponse->getBody()->write("Hello Dude1");
-
-  return $objResponse;
+  return $objResponse->withJson($arrmixRecords);
 };

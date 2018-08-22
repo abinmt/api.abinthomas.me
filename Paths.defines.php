@@ -7,4 +7,5 @@ if( false === defined('PATH_DOCUMENT_ROOT')) {
 	define('PATH_PHP_LIBRARY', PATH_PHP_APPLICATION . 'Library/');
 	define('PATH_PHP_TESTS', PATH_PHP_APPLICATION . 'Tests/');
 	define('PATH_PHP_SERVICE_HANDLERS', PATH_PHP_APPLICATION . 'ServiceHandlers/');
+	define('PATH_PHP_MIDDLEWARES', PATH_PHP_APPLICATION . 'Middlewares/');
 }
