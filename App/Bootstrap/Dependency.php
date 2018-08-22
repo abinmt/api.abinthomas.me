@@ -1,17 +1,17 @@
 <?php
-$objContainer = $objApp->getContainer();
+$_objContainer = $objApp->getContainer();
 
-$objContainer['mongo_client'] = function($objContainer) {
-  return new MongoDB\Client($objContainer->get('db_string'));
+$_objContainer['mongo_client'] = function($_objContainer) {
+  return new MongoDB\Client($_objContainer->get('db_string'));
 };
 
-$objContainer['database'] = function($objContainer) {
-  return $objContainer->get( 'database_name' );
+$_objContainer['database'] = function($_objContainer) {
+  return $_objContainer->get( 'database_name' );
 };
 
-$objContainer['posts'] = function($objContainer) {
-  $objMongoClient = $objContainer['mongo_client'];
-  $strDbName = $objContainer['database'];
+$_objContainer['posts'] = function($_objContainer) {
+  $objMongoClient = $_objContainer['mongo_client'];
+  $strDbName = $_objContainer['database'];
 
   return $objMongoClient->$strDbName->posts;
 };
