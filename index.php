@@ -2,8 +2,6 @@
 require 'Paths.defines.php';
 require 'vendor/autoload.php';
 
-
-
 $objEnvironment = new \Dotenv\Dotenv(PATH_DOCUMENT_ROOT);
 $objEnvironment->load();
 

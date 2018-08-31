@@ -1,4 +1,5 @@
 <?php
 require PATH_PHP_SERVICE_HANDLERS . 'PostsHandler.php';
 
-$objApp->get('/getAllPosts', $fnGetAllPosts);
+$objApp->get('/get-all-posts', $fnGetAllPosts);
+$objApp->post('/insert-post', $fnInsertPost);
