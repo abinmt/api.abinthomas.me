@@ -1,8 +1,8 @@
 <?php
+//echo "Hello world";
+//phpinfo();
 
-echo phpinfo();
 
-/*
 require 'Paths.defines.php';
 require 'vendor/autoload.php';
 
@@ -19,4 +19,4 @@ require PATH_PHP_MIDDLEWARES . 'Auth.php';
 require PATH_PHP_ROUTES . 'Routes.php';
 
 $objApp->run();
-*/
+

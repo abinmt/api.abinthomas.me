@@ -1,4 +1,4 @@
-FROM php:7-fpm
+FROM php:fpm
 
 # Install modules.
 RUN buildDeps="libpq-dev libzip-dev libicu-dev libpng-dev libjpeg62-turbo-dev libfreetype6-dev libmagickwand-6.q16-dev libxslt-dev zip unzip" && \
@@ -23,16 +23,16 @@ RUN buildDeps="libpq-dev libzip-dev libicu-dev libpng-dev libjpeg62-turbo-dev li
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 # Creating /app to store the code base.
-RUN mkdir /blog_post_service
+RUN mkdir /post_service
 
 # Set the application directory.
-WORKDIR /blog_post_service
+WORKDIR /post_service
 
 # Install our packages.
-#COPY composer.json /blog_post_service/composer.json
-#RUN composer install
+COPY composer.json /post_service/composer.json
+RUN composer install
 
-# Copy our code from the current folder to /app inside the container.
+# Copy our code from the current folder inside the container.
 COPY . .
 
 LABEL maintainer="Abin Thomas <abinmt@gmail.com>"
