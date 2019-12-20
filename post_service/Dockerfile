@@ -17,25 +17,13 @@ RUN buildDeps="libpq-dev libzip-dev libicu-dev libpng-dev libjpeg62-turbo-dev li
         xsl \
         intl
 
-
-
-# Install Composer.
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 # Creating /app to store the code base.
 RUN mkdir /post_service
 
 # Set the application directory.
 WORKDIR /post_service
 
-# Install our packages.
-COPY composer.json /post_service/composer.json
-RUN composer install
-
 # Copy our code from the current folder inside the container.
 COPY . .
 
 LABEL maintainer="Abin Thomas <abinmt@gmail.com>"
-
-# Define our command to be run when launching the container.
-#CMD ["php-fpm"]

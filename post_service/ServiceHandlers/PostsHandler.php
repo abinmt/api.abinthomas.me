@@ -2,36 +2,40 @@
 use \Psr\Http\Message\ServerRequestInterface as IRequest;
 use \Psr\Http\Message\ResponseInterface as IResponse;
 
-$fnGetAllPosts = function(IRequest $objRequest, IResponse $objResponse, array $arrmixArgs): IResponse {
-  $arrobjResultsIterator = $this->posts->find();
-
-  $arrmixRecords = [];
-
-  foreach ($arrobjResultsIterator as $intIndex => $arrmixData) {
-     $arrmixRecords[$intIndex]['name'] = $arrmixData['name'];
-     $arrmixRecords[$intIndex]['status'] = $arrmixData['status'];
-     $arrmixRecords[$intIndex]['created_on'] = $arrmixData['created_on'];
-     $arrmixRecords[$intIndex]['updated_on'] = $arrmixData['updated_on'];
-     $arrmixRecords[$intIndex]['contents'] = $arrmixData['contents'];
-     $arrmixRecords[$intIndex]['tags'] = $arrmixData['tags'];
-     $arrmixRecords[$intIndex]['comments'] = $arrmixData['comments'];
-  }
-
-  return $objResponse->withJson($arrmixRecords);
+$fnWelcome = function (IRequest $objRequest, IResponse $objResponse, array $arrmixArgs): IResponse {
+  return $objResponse->withJson(['Welcome those big, sticky, complicated problems. In them are your most powerful opportunities.']);
 };
 
-$fnInsertPost = function(IRequest $objRequest, IResponse $objResponse, array $arrmixArgs): IResponse {
-	$arrmixdata = $objRequest->getParsedBody();
+$fnGetAllPosts = function (IRequest $objRequest, IResponse $objResponse, array $arrmixArgs): IResponse {
+    $arrobjResultsIterator = $this->posts->find();
 
-	$arrmixpost['name'] = filter_var($arrmixdata['name'], FILTER_SANITIZE_STRING);
-	$arrmixpost['status'] = filter_var($arrmixdata['status'], FILTER_SANITIZE_STRING);
-	$arrmixpost['created_on'] = filter_var($arrmixdata['created_on'], FILTER_SANITIZE_STRING);
-	$arrmixpost['updated_on'] = filter_var($arrmixdata['updated_on'], FILTER_SANITIZE_STRING);
-	$arrmixpost['contents'] = filter_var($arrmixdata['contents'], FILTER_SANITIZE_STRING);
-	$arrmixpost['tags'] = filter_var($arrmixdata['tags'], FILTER_SANITIZE_STRING);
-	$arrmixpost['comments'] = filter_var($arrmixdata['comments'], FILTER_SANITIZE_STRING);
+    $arrmixRecords = [];
 
-	$arrobjResultsIterator = $this->posts->insertOne($arrmixpost);
+    foreach ($arrobjResultsIterator as $intIndex => $arrmixData) {
+        $arrmixRecords[$intIndex]['name'] = $arrmixData['name'];
+        $arrmixRecords[$intIndex]['status'] = $arrmixData['status'];
+        $arrmixRecords[$intIndex]['created_on'] = $arrmixData['created_on'];
+        $arrmixRecords[$intIndex]['updated_on'] = $arrmixData['updated_on'];
+        $arrmixRecords[$intIndex]['contents'] = $arrmixData['contents'];
+        $arrmixRecords[$intIndex]['tags'] = $arrmixData['tags'];
+        $arrmixRecords[$intIndex]['comments'] = $arrmixData['comments'];
+    }
 
-	return $objResponse->withJson($arrobjResultsIterator);
+    return $objResponse->withJson($arrmixRecords);
+};
+
+$fnInsertPost = function (IRequest $objRequest, IResponse $objResponse, array $arrmixArgs): IResponse {
+    $arrmixdata = $objRequest->getParsedBody();
+
+    $arrmixpost['name'] = filter_var($arrmixdata['name'], FILTER_SANITIZE_STRING);
+    $arrmixpost['status'] = filter_var($arrmixdata['status'], FILTER_SANITIZE_STRING);
+    $arrmixpost['created_on'] = filter_var($arrmixdata['created_on'], FILTER_SANITIZE_STRING);
+    $arrmixpost['updated_on'] = filter_var($arrmixdata['updated_on'], FILTER_SANITIZE_STRING);
+    $arrmixpost['contents'] = filter_var($arrmixdata['contents'], FILTER_SANITIZE_STRING);
+    $arrmixpost['tags'] = filter_var($arrmixdata['tags'], FILTER_SANITIZE_STRING);
+    $arrmixpost['comments'] = filter_var($arrmixdata['comments'], FILTER_SANITIZE_STRING);
+
+    $arrobjResultsIterator = $this->posts->insertOne($arrmixpost);
+
+    return $objResponse->withJson($arrobjResultsIterator);
 };
