@@ -3,7 +3,22 @@ use \Psr\Http\Message\ServerRequestInterface as IRequest;
 use \Psr\Http\Message\ResponseInterface as IResponse;
 
 $fnWelcome = function (IRequest $objRequest, IResponse $objResponse, array $arrmixArgs): IResponse {
-  return $objResponse->withJson(['Welcome those big, sticky, complicated problems. In them are your most powerful opportunities.']);
+    $conn = pg_connect("host=db port=5432 dbname=abinthomas.me user=postgres");
+
+    echo "<pre>";
+    print_r($conn);
+
+    if (!$conn) {
+        echo "An error occurred.\n";
+        exit;
+    }
+
+    $result = pg_query($conn, "SELECT * FROM blogs");
+
+    print_r($result);
+    
+
+    //return $objResponse->withJson(['Welcome those big, sticky, complicated problems. In them are your most powerful opportunities.']);
 };
 
 $fnGetAllPosts = function (IRequest $objRequest, IResponse $objResponse, array $arrmixArgs): IResponse {

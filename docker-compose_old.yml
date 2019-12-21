@@ -1,26 +1,53 @@
-version: "2"
+version: "3"
 
 services:
-  blog_post_service:
-    build: ./app/blog_post_service
-    env_file:
-      - "./app/blog_post_service/.env"
+  vote:
+    build: ./vote
+    command: python app.py
     volumes:
-     - ./app/blog_post_service:/blog_post_service
-    
-    networks:
-      - fun-network
-
-  web_server:
-    image: nginx:latest
+     - ./vote:/app
     ports:
-      - "8080:80"
-    volumes:
-      - ./app/blog_post_service:/blog_post_service
-      - ./site.conf:/etc/nginx/conf.d/default.conf
+      - "5000:80"
     networks:
-      - fun-network
-      
+      - front-tier
+      - back-tier
+
+  result:
+    build: ./result
+    command: nodemon --debug server.js
+    volumes:
+      - ./result:/app
+    ports:
+      - "5001:80"
+    networks:
+      - front-tier
+      - back-tier
+
+  worker:
+    build: ./worker
+    networks:
+      - back-tier
+
+  redis:
+    image: 'redis:3.2-alpine'
+    ports: ["6379"]
+    networks:
+      - back-tier
+
+  db:
+    image: postgres:9.4
+    volumes:
+      - "db-data:/var/lib/postgresql/data"
+    networks:
+      - back-tier
+
+volumes:
+  db-data:
+
 networks:
-  fun-network:
-    driver: bridge
+  front-tier:
+  back-tier:
+
+    environment: 
+      - PGADMIN_DEFAULT_EMAIL="abinmt"
+      - PGADMIN_DEFAULT_PASSWORD="password"
